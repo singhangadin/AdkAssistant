@@ -11,6 +11,10 @@ The agent is a cloud **Gemini** model wired up with two local, on-device tools:
 Ask it *"what time is it in Tokyo?"* or *"what phone is this?"* and the model
 decides which tool to call, calls it, and answers from the result.
 
+<p align="center">
+  <img src="docs/demo.gif" alt="ADK Assistant demo — agent calling on-device tools" width="300" />
+</p>
+
 ## Architecture
 
 Clean Architecture + **MVI**, with **Hilt** for DI and the **Navigation Component**
