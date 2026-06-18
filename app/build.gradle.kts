@@ -3,8 +3,8 @@ import java.util.Properties
 plugins {
   alias(libs.plugins.android.application)
   alias(libs.plugins.compose.compiler)
-  alias(libs.plugins.kotlin.serialization)
   alias(libs.plugins.ksp)
+  alias(libs.plugins.hilt)
 }
 
 // Read the Gemini API key from local.properties (git-ignored) or the environment.
@@ -16,10 +16,10 @@ val geminiApiKey: String = Properties().apply {
 }.getProperty("GEMINI_API_KEY") ?: System.getenv("GEMINI_API_KEY") ?: ""
 
 android {
-    namespace = "com.example.adkassistant"
+    namespace = "in.singhangad.adkassistant"
     compileSdk = 36
     defaultConfig {
-        applicationId = "com.example.adkassistant"
+        applicationId = "in.singhangad.adkassistant"
         minSdk = 26 // ADK's AAR declares minSdk 26, even though the docs say 24.
         targetSdk = 36
         versionCode = 1
@@ -97,10 +97,18 @@ dependencies {
   androidTestImplementation(libs.androidx.test.runner)
   androidTestImplementation(libs.androidx.test.espresso.core)
 
-  // Navigation
-  implementation(libs.androidx.navigation3.ui)
-  implementation(libs.androidx.navigation3.runtime)
-  implementation(libs.androidx.lifecycle.viewmodel.navigation3)
+  // Navigation Component (Compose)
+  implementation(libs.androidx.navigation.compose)
+
+  // Hilt (dependency injection)
+  implementation(libs.hilt.android)
+  ksp(libs.hilt.compiler)
+  implementation(libs.androidx.hilt.navigation.compose)
+
+  // Room (local persistence)
+  implementation(libs.androidx.room.runtime)
+  implementation(libs.androidx.room.ktx)
+  ksp(libs.androidx.room.compiler)
 
   // Agent Development Kit (ADK) for Android
   implementation(libs.google.adk.kotlin.core)
